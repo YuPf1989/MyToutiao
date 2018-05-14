@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_build"
+        android:enabled="true"
+        android:icon="@drawable/ic_devices_24dp"
+        android:title="首页"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_check"
+        android:enabled="true"
+        android:icon="@drawable/ic_library_books_24dp"
+        android:title="宣教"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_my"
+        android:enabled="true"
+        android:icon="@drawable/ic_my_black_24dp"
+        android:title="我的"
+        app:showAsAction="ifRoom"/>
+</menu>

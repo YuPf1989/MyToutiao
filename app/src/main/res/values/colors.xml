@@ -3,4 +3,17 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="white">#ffffff</color>
+
+    <!--是大标题、正文、item的颜色-->
+    <color name="text_color_black">#24292E</color>
+    <!--小的提示性信息-->
+    <color name="textColor_light">#aaaaaa</color>
+    <color name="fillColor">#888888</color>
+    <!--软件内部通用字体颜色-->
+    <color name="textColorPrimary">#616161</color>
+    <color name="textColor">#888888</color>
+    <color name="lineColor">#cccccc</color>
+
+    <color name="background" >#fff3f3f3</color>
 </resources>
