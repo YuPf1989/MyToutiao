@@ -1,9 +1,13 @@
 package com.rain.mytoutiao;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,14 +19,16 @@ import android.view.View;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.rain.mytoutiao.base.AbsBaseActivity;
+import com.rain.mytoutiao.fragment.EduTabView;
+import com.rain.mytoutiao.fragment.HomeTabView;
+import com.rain.mytoutiao.fragment.MyTabView;
 import com.rain.mytoutiao.util.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AbsBaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AbsBaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.bottom_navigation)
@@ -31,6 +37,14 @@ public class MainActivity extends AbsBaseActivity
     NavigationView navView;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
+
+    private static final int HOME_TAB = 0;
+    private static final int EDU_TAB = 1;
+    private static final int MY_TAB = 2;
+
+    private HomeTabView homeTabView;
+    private EduTabView eduTabView;
+    private MyTabView myTabView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +67,62 @@ public class MainActivity extends AbsBaseActivity
         initToolBar(toolbar,false,getResources().getString(R.string.app_name));
         initBottomNavigation();
         initListener();
+        showFragment(HOME_TAB);
+    }
+
+    private void showFragment(int index) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        hideFragment(ft);
+        switch (index) {
+            case HOME_TAB:
+                toolbar.setTitle(R.string.home);
+                if (homeTabView == null) {
+                    homeTabView = HomeTabView.newInstance();
+                    ft.add(R.id.container, homeTabView, HomeTabView.class.getSimpleName());
+                } else {
+                    ft.show(homeTabView);
+                }
+                break;
+
+            case EDU_TAB:
+                toolbar.setTitle(R.string.edu);
+                if (eduTabView == null) {
+                    eduTabView = EduTabView.newInstance();
+                    ft.add(R.id.container, eduTabView, EduTabView.class.getSimpleName());
+                } else {
+                    ft.show(eduTabView);
+                }
+                break;
+
+            case MY_TAB:
+                toolbar.setTitle(R.string.my);
+                if (myTabView == null) {
+                    myTabView = MyTabView.newInstance();
+                    ft.add(R.id.container, myTabView, MyTabView.class.getSimpleName());
+                } else {
+                    ft.show(myTabView);
+                }
+                break;
+        }
+        ft.commit();
+    }
+
+    private void hideFragment(FragmentTransaction ft) {
+        if (homeTabView != null) {
+            ft.hide(homeTabView);
+        }
+
+        if (eduTabView != null) {
+            ft.hide(eduTabView);
+        }
+
+        if (myTabView != null) {
+            ft.hide(myTabView);
+        }
     }
 
     private void initBottomNavigation() {
-        //开启放大动画
         bottomNavigation.enableAnimation(true);
-        //关闭所有动画
         bottomNavigation.enableShiftingMode(false);
         bottomNavigation.enableItemShiftingMode(false);
     }
@@ -69,6 +133,26 @@ public class MainActivity extends AbsBaseActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_build:
+                        showFragment(HOME_TAB);
+
+                        break;
+                    case R.id.action_check:
+                        showFragment(EDU_TAB);
+
+                        break;
+                    case R.id.action_my:
+                        showFragment(MY_TAB);
+
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     @Override
