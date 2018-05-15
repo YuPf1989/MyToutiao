@@ -75,7 +75,7 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
         hideFragment(ft);
         switch (index) {
             case HOME_TAB:
-                toolbar.setTitle(R.string.home);
+                toolbar.setTitle("新闻");
                 if (homeTabView == null) {
                     homeTabView = HomeTabView.newInstance();
                     ft.add(R.id.container, homeTabView, HomeTabView.class.getSimpleName());
@@ -85,7 +85,7 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
                 break;
 
             case EDU_TAB:
-                toolbar.setTitle(R.string.edu);
+                toolbar.setTitle("图片");
                 if (eduTabView == null) {
                     eduTabView = EduTabView.newInstance();
                     ft.add(R.id.container, eduTabView, EduTabView.class.getSimpleName());
@@ -95,7 +95,7 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
                 break;
 
             case MY_TAB:
-                toolbar.setTitle(R.string.my);
+                toolbar.setTitle("视频");
                 if (myTabView == null) {
                     myTabView = MyTabView.newInstance();
                     ft.add(R.id.container, myTabView, MyTabView.class.getSimpleName());
