@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp">
+
+    <TextView
+        android:layout_centerVertical="true"
+        android:id="@+id/tv_my_channel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="我的频道"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tv_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/tv_my_channel"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/tv_my_channel"
+        android:text="长按编辑，拖拽排序"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/shape_red_circle_border"
+        android:paddingBottom="6dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="6dp"
+        android:text="编辑"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="16sp" />
+
+    <include
+        layout="@layout/layout_horizontal_line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

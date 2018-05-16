@@ -1,5 +1,6 @@
 package com.rain.mytoutiao.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.rain.mytoutiao.R;
+import com.rain.mytoutiao.activity.NewsChannelActivity;
 import com.rain.mytoutiao.adapter.BaseViewPagerAdapter;
 import com.rain.mytoutiao.base.LazyLoadFragment;
 import com.rain.mytoutiao.db.ChannelDao;
@@ -144,6 +146,6 @@ public class HomeTabView extends LazyLoadFragment {
 
     @OnClick(R.id.add)
     public void onViewClicked() {
-
+        startActivity(new Intent(getActivity(), NewsChannelActivity.class));
     }
 }
