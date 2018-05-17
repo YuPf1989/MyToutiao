@@ -14,11 +14,10 @@ import android.widget.ImageView;
 import com.rain.mytoutiao.R;
 import com.rain.mytoutiao.activity.NewsChannelActivity;
 import com.rain.mytoutiao.adapter.BaseViewPagerAdapter;
+import com.rain.mytoutiao.base.BaseListFragment;
 import com.rain.mytoutiao.base.LazyLoadFragment;
 import com.rain.mytoutiao.db.ChannelDao;
-import com.rain.mytoutiao.db.ChannelDao_Table;
 import com.rain.mytoutiao.eventbus.IsRefreshTab;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -171,7 +170,22 @@ public class HomeTabView extends LazyLoadFragment {
     public void onDoubleClick() {
         if (fragments != null && fragments.size() > 0) {
             int currentItem = viewPager.getCurrentItem();
-            ((LazyLoadFragment) fragments.get(currentItem)).fetchData();
+            ((BaseListFragment) fragments.get(currentItem)).onRefresh();
         }
+    }
+
+    @Override
+    public void onShowLoading() {
+
+    }
+
+    @Override
+    public void onHideLoading() {
+
+    }
+
+    @Override
+    public void onShowNetError() {
+
     }
 }

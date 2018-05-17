@@ -29,4 +29,19 @@ public class MyTabView extends LazyLoadFragment {
     public static MyTabView newInstance() {
         return new MyTabView();
     }
+
+    @Override
+    public void onShowLoading() {
+
+    }
+
+    @Override
+    public void onHideLoading() {
+
+    }
+
+    @Override
+    public void onShowNetError() {
+
+    }
 }

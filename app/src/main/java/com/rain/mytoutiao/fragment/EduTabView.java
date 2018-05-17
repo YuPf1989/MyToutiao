@@ -2,7 +2,9 @@ package com.rain.mytoutiao.fragment;
 
 import android.os.Bundle;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.rain.mytoutiao.R;
+import com.rain.mytoutiao.base.BaseListFragment;
 import com.rain.mytoutiao.base.LazyLoadFragment;
 
 /**
@@ -10,7 +12,7 @@ import com.rain.mytoutiao.base.LazyLoadFragment;
  * Date:2018/5/15 9:33
  * Description:
  */
-public class EduTabView extends LazyLoadFragment {
+public class EduTabView extends BaseListFragment {
     @Override
     public void fetchData() {
 
@@ -28,5 +30,10 @@ public class EduTabView extends LazyLoadFragment {
 
     public static EduTabView newInstance() {
         return new EduTabView();
+    }
+
+    @Override
+    public BaseQuickAdapter getAdapter() {
+        return null;
     }
 }

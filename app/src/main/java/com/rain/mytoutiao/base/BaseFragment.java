@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import butterknife.ButterKnife;
@@ -19,7 +21,7 @@ import butterknife.Unbinder;
  * Description:This is BaseFragment
  */
 
-public abstract class BaseFragment extends RxFragment {
+public abstract class BaseFragment extends RxFragment implements IBaseView{
 
     protected View rootView;
     protected Context mContext;
@@ -84,9 +86,12 @@ public abstract class BaseFragment extends RxFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         initView(savedInstanceState);
+    }
 
+    @Override
+    public LifecycleTransformer bindToLife() {
+        return bindUntilEvent(FragmentEvent.DESTROY);
     }
 
     @Override

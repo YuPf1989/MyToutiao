@@ -29,4 +29,19 @@ public class WendaContentView extends LazyLoadFragment {
     public static WendaContentView newInstance() {
         return new WendaContentView();
     }
+
+    @Override
+    public void onShowLoading() {
+
+    }
+
+    @Override
+    public void onHideLoading() {
+
+    }
+
+    @Override
+    public void onShowNetError() {
+
+    }
 }
