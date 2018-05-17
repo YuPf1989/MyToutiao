@@ -36,4 +36,11 @@ public class BaseViewPagerAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         return tabtitles.get(position);
     }
+
+    // 重新填充数据
+    public void recreatItems(List<Fragment> fragments,List<String> tabtitles) {
+        this.fragments = fragments;
+        this.tabtitles = tabtitles;
+        notifyDataSetChanged();
+    }
 }

@@ -18,17 +18,23 @@
 
             <include layout="@layout/layout_my_channel_header" />
 
+            <!--android:nestedScrollingEnabled="false" recyclerview不滑动-->
+            <!--解决recycler嵌套scrollview嵌套滑动问题-->
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_my_channel"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                />
 
             <include layout="@layout/layout_hide_channel_header" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_hide_channel"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                />
 
         </LinearLayout>
 

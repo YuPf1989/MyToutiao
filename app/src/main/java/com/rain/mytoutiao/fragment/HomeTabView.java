@@ -17,7 +17,12 @@ import com.rain.mytoutiao.adapter.BaseViewPagerAdapter;
 import com.rain.mytoutiao.base.LazyLoadFragment;
 import com.rain.mytoutiao.db.ChannelDao;
 import com.rain.mytoutiao.db.ChannelDao_Table;
+import com.rain.mytoutiao.eventbus.IsRefreshTab;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +51,17 @@ public class HomeTabView extends LazyLoadFragment {
     private ArrayList<String> tabTitles;
     private Map<String, Fragment> map = new HashMap<>();
     private static final String TAG  = "HomeTabView";
+    private BaseViewPagerAdapter pagerAdapter;
+
+    // 是否重新刷新tab，重建fragment
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void recreatTab(IsRefreshTab isRefreshTab) {
+        boolean isRefresh = isRefreshTab.isRefresh;
+        if (isRefresh) {
+            initTabs();
+            pagerAdapter.recreatItems(fragments,tabTitles);
+        }
+    }
 
     @Override
     public void fetchData() {
@@ -63,11 +79,13 @@ public class HomeTabView extends LazyLoadFragment {
         initTabs();
         // 初始化viewpager
         initViewPager();
+        EventBus.getDefault().register(this);
     }
 
     private void initViewPager() {
         tab.setupWithViewPager(viewPager);
-        viewPager.setAdapter(new BaseViewPagerAdapter(getChildFragmentManager(),fragments,tabTitles));
+        pagerAdapter = new BaseViewPagerAdapter(getChildFragmentManager(), fragments, tabTitles);
+        viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(15);
     }
 
@@ -142,6 +160,7 @@ public class HomeTabView extends LazyLoadFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
 
     @OnClick(R.id.add)
