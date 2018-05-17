@@ -23,7 +23,7 @@ import java.util.Objects;
  * 首页所有频道的表
  */
 @Table(database = MyDatabase.class)
-public class ChannelDao extends BaseModel implements Comparable<ChannelDao>{
+public class ChannelDao extends BaseModel implements Comparable<ChannelDao> {
     @PrimaryKey
     public String id;
     @Column
@@ -34,6 +34,18 @@ public class ChannelDao extends BaseModel implements Comparable<ChannelDao>{
     public int position;
 
     public boolean enableEdit = false;// 当前条目是否可编辑
+
+    public ChannelDao() {
+
+    }
+
+    // note:注意一定要有无参构造
+    public ChannelDao(String id, String name, boolean is_enable, int position) {
+        this.id = id;
+        this.name = name;
+        this.is_enable = is_enable;
+        this.position = position;
+    }
 
     // 初始化频道数据
     public static void addInitData() {
@@ -57,24 +69,39 @@ public class ChannelDao extends BaseModel implements Comparable<ChannelDao>{
             channelDao.position = i;
             channelDao.insert();
         }
+
     }
 
     // true 表示返回我的频道，false 表示隐藏频道
     public static List<ChannelDao> queryChannel(boolean is_enable) {
-        return  SQLite.select().from(ChannelDao.class).where(ChannelDao_Table.is_enable.eq(is_enable)).queryList();
+        return SQLite.select()
+                .from(ChannelDao.class)
+                .where(ChannelDao_Table.is_enable.eq(is_enable))
+                .orderBy(ChannelDao_Table.position, true)
+                .queryList();
     }
 
-    public static void addChannels(final List<ChannelDao> list) {
-        Transaction transaction = FlowManager.getDatabase(MyDatabase.class)
-                .beginTransactionAsync(databaseWrapper -> {
+    public static void addAllChannels(final List<ChannelDao> list) {
+        FlowManager.getDatabase(MyDatabase.class)
+                .executeTransaction(databaseWrapper -> {
                     FastStoreModelTransaction
-                            .insertBuilder(FlowManager.getModelAdapter(ChannelDao.class))
+                            .saveBuilder(FlowManager.getModelAdapter(ChannelDao.class))
                             .addAll(list)
                             .build()
                             .execute(databaseWrapper);
-                })
-                .build();
-        transaction.execute();
+                });
+    }
+
+    public static void addChannels(final List<ChannelDao> list) {
+        FlowManager.getDatabase(MyDatabase.class)
+                .executeTransaction(databaseWrapper -> {
+                    ChannelDao channelDao = null;
+                    for (int i = 0; i < list.size(); i++) {
+                        ChannelDao srcDao = list.get(i);
+                        channelDao = new ChannelDao(srcDao.id,srcDao.name,srcDao.is_enable,i);
+                        channelDao.insert();
+                    }
+                });
     }
 
 
@@ -96,6 +123,16 @@ public class ChannelDao extends BaseModel implements Comparable<ChannelDao>{
 
     @Override
     public int compareTo(@NonNull ChannelDao o) {
-        return this.position-o.position;
+        return this.position - o.position;
+    }
+
+    @Override
+    public String toString() {
+        return "ChannelDao{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", is_enable=" + is_enable +
+                ", position=" + position +
+                '}';
     }
 }

@@ -57,6 +57,7 @@ public class HomeTabView extends LazyLoadFragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void recreatTab(IsRefreshTab isRefreshTab) {
         boolean isRefresh = isRefreshTab.isRefresh;
+        Log.e(TAG, "recreatTab: "+isRefresh);
         if (isRefresh) {
             initTabs();
             pagerAdapter.recreatItems(fragments,tabTitles);
@@ -92,10 +93,10 @@ public class HomeTabView extends LazyLoadFragment {
     private void initTabs() {
         fragments = new ArrayList<>();
         tabTitles = new ArrayList<>();
-        List<ChannelDao> channelDaos = SQLite.select().from(ChannelDao.class).where(ChannelDao_Table.is_enable.eq(true)).queryList();
+        List<ChannelDao> channelDaos = ChannelDao.queryChannel(true);
         if (channelDaos.size() == 0) {
             ChannelDao.addInitData();
-            channelDaos = SQLite.select().from(ChannelDao.class).where(ChannelDao_Table.is_enable.eq(true)).queryList();
+            channelDaos = ChannelDao.queryChannel(true);
             Log.e(TAG, "initTabs: "+channelDaos.size());
         }
 

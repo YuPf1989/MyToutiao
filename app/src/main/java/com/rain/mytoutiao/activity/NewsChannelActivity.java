@@ -19,13 +19,12 @@ import com.rain.mytoutiao.R;
 import com.rain.mytoutiao.adapter.ChannelAdapter;
 import com.rain.mytoutiao.base.AbsBaseActivity;
 import com.rain.mytoutiao.db.ChannelDao;
-import com.rain.mytoutiao.db.ChannelDao_Table;
 import com.rain.mytoutiao.eventbus.IsRefreshTab;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -34,7 +33,6 @@ import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
@@ -59,7 +57,7 @@ public class NewsChannelActivity extends AbsBaseActivity {
     private ItemDragAndSwipeCallback mItemDragAndSwipeCallback;
     private ItemTouchHelper mItemTouchHelper;
     private List<ChannelDao> channelDaos_enable;
-    private List<ChannelDao> channelDaos_enable_copy;
+    private List<ChannelDao> channelDaos_enable_copy = new ArrayList<>();
     private List<ChannelDao> channelDaos_unable;
     private static final String EDIT = "编辑";
     private static final String OK = "完成";
@@ -81,7 +79,8 @@ public class NewsChannelActivity extends AbsBaseActivity {
     private void initData() {
         channelDaos_enable = ChannelDao.queryChannel(true);
         channelDaos_unable = ChannelDao.queryChannel(false);
-        channelDaos_enable_copy = channelDaos_enable;
+        // copy 原始数据
+        channelDaos_enable_copy.addAll(channelDaos_enable);
     }
 
     private void initListener() {
@@ -128,9 +127,7 @@ public class NewsChannelActivity extends AbsBaseActivity {
                     hide_channel.enableEdit = false;
                 }
                 my_channel_adapter.addData(hide_channel);
-                channelDaos_enable.add(hide_channel);
-                channelDaos_unable.remove(position);
-                adapter.notifyItemRemoved(position);
+                adapter.remove(position);
             }
         });
 
@@ -142,9 +139,9 @@ public class NewsChannelActivity extends AbsBaseActivity {
                     ChannelDao my_channel = channelDaos_enable.get(position);
                     my_channel.is_enable = false;
                     hide_channel_adapter.addData(0, my_channel);
-                    channelDaos_unable.add(my_channel);
-                    channelDaos_enable.remove(position);
-                    adapter.notifyItemRemoved(position);
+                    adapter.remove(position);
+                    // note:下面的方法只是从视图上将item移除，数据源并未更新
+//                    adapter.notifyItemRemoved(position);
                 }
             }
         });
@@ -222,7 +219,9 @@ public class NewsChannelActivity extends AbsBaseActivity {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
                         // 前后集合不相等
-                        if (!aBoolean) {
+                        if (aBoolean) {
+                            Log.e(TAG, "accept: my_channel_adapter.getData():"+my_channel_adapter.getData());
+                            Log.e(TAG, "accept: hide_channel_adapter.getData():"+hide_channel_adapter.getData());
                             SQLite.delete(ChannelDao.class).execute();
                             ChannelDao.addChannels(my_channel_adapter.getData());
                             ChannelDao.addChannels(hide_channel_adapter.getData());
