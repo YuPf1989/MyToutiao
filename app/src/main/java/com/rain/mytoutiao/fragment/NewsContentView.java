@@ -50,7 +50,7 @@ public class NewsContentView extends LazyLoadFragment {
                     swipe.setRefreshing(false);
                     adapter.setNewData(data);
                 }
-            }, 5000);
+            }, 2000);
             return;
         }
         swipe.setRefreshing(true);
@@ -60,7 +60,7 @@ public class NewsContentView extends LazyLoadFragment {
                 swipe.setRefreshing(false);
                 adapter.setNewData(data);
             }
-        }, 5000);
+        }, 2000);
     }
 
     @Override

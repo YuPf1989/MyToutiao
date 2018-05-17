@@ -50,17 +50,16 @@ public class HomeTabView extends LazyLoadFragment {
     private ArrayList<Fragment> fragments;
     private ArrayList<String> tabTitles;
     private Map<String, Fragment> map = new HashMap<>();
-    private static final String TAG  = "HomeTabView";
+    private static final String TAG = "HomeTabView";
     private BaseViewPagerAdapter pagerAdapter;
 
     // 是否重新刷新tab，重建fragment
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void recreatTab(IsRefreshTab isRefreshTab) {
         boolean isRefresh = isRefreshTab.isRefresh;
-        Log.e(TAG, "recreatTab: "+isRefresh);
         if (isRefresh) {
             initTabs();
-            pagerAdapter.recreatItems(fragments,tabTitles);
+            pagerAdapter.recreatItems(fragments, tabTitles);
         }
     }
 
@@ -97,7 +96,7 @@ public class HomeTabView extends LazyLoadFragment {
         if (channelDaos.size() == 0) {
             ChannelDao.addInitData();
             channelDaos = ChannelDao.queryChannel(true);
-            Log.e(TAG, "initTabs: "+channelDaos.size());
+            Log.e(TAG, "initTabs: " + channelDaos.size());
         }
 
         for (ChannelDao dao :
@@ -128,7 +127,7 @@ public class HomeTabView extends LazyLoadFragment {
                     }
                     break;
 
-                    // 其他fragment的条目样式是一致的
+                // 其他fragment的条目样式是一致的
                 default:
                     if (map.containsKey(id)) {
                         fragments.add(map.get(id));
@@ -167,5 +166,12 @@ public class HomeTabView extends LazyLoadFragment {
     @OnClick(R.id.add)
     public void onViewClicked() {
         startActivity(new Intent(getActivity(), NewsChannelActivity.class));
+    }
+
+    public void onDoubleClick() {
+        if (fragments != null && fragments.size() > 0) {
+            int currentItem = viewPager.getCurrentItem();
+            ((LazyLoadFragment) fragments.get(currentItem)).fetchData();
+        }
     }
 }

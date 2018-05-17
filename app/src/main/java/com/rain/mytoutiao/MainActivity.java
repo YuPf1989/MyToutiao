@@ -45,6 +45,7 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
     private HomeTabView homeTabView;
     private EduTabView eduTabView;
     private MyTabView myTabView;
+    private long firstClickTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,15 +140,15 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
                 switch (item.getItemId()) {
                     case R.id.action_build:
                         showFragment(HOME_TAB);
-
+                        doubleClick(HOME_TAB);
                         break;
                     case R.id.action_check:
                         showFragment(EDU_TAB);
-
+                        doubleClick(EDU_TAB);
                         break;
                     case R.id.action_my:
                         showFragment(MY_TAB);
-
+                        doubleClick(MY_TAB);
                         break;
                 }
                 return true;
@@ -203,6 +204,25 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void doubleClick(int index) {
+        long secondClickTime = System.currentTimeMillis();
+        if ((secondClickTime - firstClickTime < 500)) {
+            switch (index) {
+                case HOME_TAB:
+                    homeTabView.onDoubleClick();
+                    break;
+                case EDU_TAB:
+                    homeTabView.onDoubleClick();
+                    break;
+                case MY_TAB:
+                    homeTabView.onDoubleClick();
+                    break;
+            }
+        } else {
+            firstClickTime = secondClickTime;
+        }
     }
 
 }
