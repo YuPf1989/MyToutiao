@@ -217,7 +217,7 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
             // 设置
             startActivity(new Intent(this, SettingActivity.class));
         } else if (id == R.id.nav_share) {
-
+            startActivity(new Intent(this, SettingsActivity.class));
         } else if (id == R.id.nav_send) {
 
         }

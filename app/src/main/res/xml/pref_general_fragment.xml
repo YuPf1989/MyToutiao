@@ -43,6 +43,17 @@
 
     <PreferenceCategory android:title="关于">
 
+        <EditTextPreference
+            android:key="account"
+            android:title="账户名"
+            android:capitalize="words"
+            android:defaultValue="小米"
+            android:inputType="textCapWords"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            />
+
         <Preference
             android:key="version"
             android:title="版本" />

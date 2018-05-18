@@ -38,4 +38,6 @@ public class SettingActivity extends AbsBaseActivity {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
     }
+
+
 }
