@@ -33,7 +33,7 @@ public class EduTabView extends BaseListFragment {
     }
 
     @Override
-    public BaseQuickAdapter getAdapter() {
+    public BaseQuickAdapter setAdapter() {
         return null;
     }
 }

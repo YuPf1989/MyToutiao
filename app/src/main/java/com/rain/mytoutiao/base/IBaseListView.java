@@ -39,7 +39,7 @@ public interface IBaseListView extends IBaseView {
     /**
      * 设置适配器
      */
-    BaseQuickAdapter getAdapter();
+    BaseQuickAdapter setAdapter();
 
     /**
      * 加载完毕

@@ -49,7 +49,7 @@ public class NewsContentView extends BaseListFragment {
     }
 
     @Override
-    public BaseQuickAdapter getAdapter() {
+    public BaseQuickAdapter setAdapter() {
         return new MySimpleAdapter(R.layout.list_item, null);
     }
 }

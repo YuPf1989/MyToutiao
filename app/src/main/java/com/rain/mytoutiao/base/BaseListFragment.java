@@ -10,10 +10,7 @@ import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.rain.mytoutiao.R;
-
 import java.util.List;
-
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -23,9 +20,7 @@ import butterknife.Unbinder;
  * Description:
  */
 public abstract class BaseListFragment extends LazyLoadFragment implements SwipeRefreshLayout.OnRefreshListener, IBaseListView {
-//    @BindView(R.id.recyclerView)
     RecyclerView recycler;
-//    @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipe;
     Unbinder unbinder;
     protected BaseQuickAdapter adapter;
@@ -44,7 +39,7 @@ public abstract class BaseListFragment extends LazyLoadFragment implements Swipe
     protected void initView(Bundle savedInstanceState) {
         recycler = rootView.findViewById(R.id.recyclerView);
         swipe = rootView.findViewById(R.id.swipe_refresh_layout);
-        adapter = getAdapter();
+        adapter = setAdapter();
         initRecycler();
     }
 

@@ -41,6 +41,9 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
     private static final int HOME_TAB = 0;
     private static final int EDU_TAB = 1;
     private static final int MY_TAB = 2;
+    private int position = 0;
+    private static final String POSITION = "position";
+    private static final String SELECT_ITEM = "navigation_select_item";
 
     private HomeTabView homeTabView;
     private EduTabView eduTabView;
@@ -65,13 +68,30 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
 
     @Override
     public void initViews(Bundle savedInstanceState) {
-        initToolBar(toolbar,false,getResources().getString(R.string.app_name));
+        initToolBar(toolbar, false, getResources().getString(R.string.app_name));
         initBottomNavigation();
         initListener();
-        showFragment(HOME_TAB);
+        if (savedInstanceState != null) {
+            homeTabView = (HomeTabView) getSupportFragmentManager().findFragmentByTag(HomeTabView.class.getSimpleName());
+            eduTabView = (EduTabView) getSupportFragmentManager().findFragmentByTag(EduTabView.class.getSimpleName());
+            myTabView = (MyTabView) getSupportFragmentManager().findFragmentByTag(MyTabView.class.getSimpleName());
+            showFragment(savedInstanceState.getInt(POSITION));
+            bottomNavigation.setSelectedItemId(savedInstanceState.getInt(SELECT_ITEM));
+        } else {
+            showFragment(HOME_TAB);
+        }
+    }
+
+    // 主要是为了处理屏幕旋转或者程序异常恢复时候用
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(POSITION, position);
+        outState.putInt(SELECT_ITEM, bottomNavigation.getCurrentItem());
+        super.onSaveInstanceState(outState);
     }
 
     private void showFragment(int index) {
+        position = index;
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         hideFragment(ft);
         switch (index) {
@@ -123,9 +143,7 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
     }
 
     private void initBottomNavigation() {
-        bottomNavigation.enableAnimation(true);
         bottomNavigation.enableShiftingMode(false);
-        bottomNavigation.enableItemShiftingMode(false);
     }
 
     private void initListener() {

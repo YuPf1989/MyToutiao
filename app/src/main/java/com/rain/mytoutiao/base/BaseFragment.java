@@ -105,16 +105,11 @@ public abstract class BaseFragment extends RxFragment implements IBaseView{
     }
 
     /**
-     * 设置toolbar和初始化菜单的方法
-     *
-     * @param toolbar
-     * @param title
+     * 初始化 Toolbar
+     * 注意这里的toolbar在activity中
      */
-    public void initToolbar(Toolbar toolbar, int menuId, String title) {
-        setHasOptionsMenu(true);
-        toolbar.setTitle(title);
-        toolbar.inflateMenu(menuId);
-//        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar_padding_top);
+    protected void initToolBar(Toolbar toolbar, boolean homeAsUpEnabled, String title) {
+        ((AbsBaseActivity) getActivity()).initToolBar(toolbar, homeAsUpEnabled, title);
     }
 
     protected abstract int getLayoutId();
