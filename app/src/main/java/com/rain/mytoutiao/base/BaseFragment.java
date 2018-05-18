@@ -74,7 +74,9 @@ public abstract class BaseFragment extends RxFragment implements IBaseView{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        rootView = inflater.inflate(getLayoutId(), container, false);
+        if (rootView == null) {
+            rootView = inflater.inflate(getLayoutId(), container, false);
+        }
 
         mContext = getContext();
 
