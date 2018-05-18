@@ -1,0 +1,57 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="基本设置">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="switch_noPhotoMode"
+            android:summary="开启后在非Wifi环境下不加载图片"
+            android:title="无图模式" />
+
+        <Preference
+            android:key="auto_nightMode"
+            android:summary="设置切换的时间"
+            android:title="自动切换夜间模式" />
+
+        <Preference
+            android:key="text_size"
+            android:summary="设置字体大小"
+            android:title="字体大小" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="其他设置">
+
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/slidable"
+            android:entryValues="@array/slidableValues"
+            android:key="slidable"
+            android:negativeButtonText="取消"
+            android:summary="类似IOS的滑动返回"
+            android:title="滑动返回" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="nav_bar"
+            android:summary="导航栏着色"
+            android:title="导航栏颜色跟随主题颜色" />
+
+        <Preference
+            android:key="clearCache"
+            android:title="清除缓存" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="关于">
+
+        <Preference
+            android:key="version"
+            android:title="版本" />
+
+        <Preference
+            android:key="licenses"
+            android:summary="查看开源许可信息"
+            android:title="开源许可" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

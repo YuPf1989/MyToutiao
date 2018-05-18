@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.rain.mytoutiao.activity.SettingActivity;
 import com.rain.mytoutiao.activity.SettingsActivity;
 import com.rain.mytoutiao.base.AbsBaseActivity;
 import com.rain.mytoutiao.fragment.EduTabView;
@@ -214,7 +215,7 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
 
         } else if (id == R.id.nav_manage) {
             // 设置
-            startActivity(new Intent(this, SettingsActivity.class));
+            startActivity(new Intent(this, SettingActivity.class));
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {

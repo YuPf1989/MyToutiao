@@ -60,8 +60,6 @@ public abstract class BaseFragment extends RxFragment implements IBaseView{
     /**
      * 当前fragment是否对用户可见
      * 不考虑数据是否加载过
-     *
-     * @return
      */
     public boolean isVisibleToUser() {
         if (!isOnPause && isVisibleToUser && isViewInitiated) {
