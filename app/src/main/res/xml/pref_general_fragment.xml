@@ -39,20 +39,23 @@
             android:key="clearCache"
             android:title="清除缓存" />
 
+        <Preference android:title="同步设置">
+            <intent android:action="android.settings.SYNC_SETTINGS" />
+        </Preference>
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="关于">
 
         <EditTextPreference
-            android:key="account"
-            android:title="账户名"
             android:capitalize="words"
             android:defaultValue="小米"
             android:inputType="textCapWords"
+            android:key="account"
             android:maxLines="1"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            />
+            android:title="账户名" />
 
         <Preference
             android:key="version"
@@ -62,6 +65,15 @@
             android:key="licenses"
             android:summary="查看开源许可信息"
             android:title="开源许可" />
+
+        <Preference
+            android:key="sourceCode"
+            android:summary="https://github.com/YuPf1989/MyToutiao"
+            android:title="源代码">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/YuPf1989/MyToutiao"/>
+        </Preference>
 
     </PreferenceCategory>
 

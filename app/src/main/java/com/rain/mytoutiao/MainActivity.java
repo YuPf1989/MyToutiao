@@ -2,6 +2,7 @@ package com.rain.mytoutiao;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.rain.mytoutiao.activity.SearchActivity;
 import com.rain.mytoutiao.activity.SettingActivity;
 import com.rain.mytoutiao.activity.SettingsActivity;
 import com.rain.mytoutiao.base.AbsBaseActivity;
@@ -52,6 +54,7 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
     private EduTabView eduTabView;
     private MyTabView myTabView;
     private long firstClickTime = 0;
+    private long existTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,8 +182,10 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - existTime > 2000) {
+            ToastUtil.showToast("再次点击退出程序！");
+            existTime = currentTime;
         } else {
             super.onBackPressed();
         }
@@ -196,13 +201,15 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_search) {
+            startActivity(new Intent(this,SearchActivity.class));
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    // 返回值true、false区别在于当前的条目是否有选中的标识
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -221,8 +228,6 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
         } else if (id == R.id.nav_send) {
 
         }
-
-        ToastUtil.showToast("item.id:" + item.getItemId());
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -246,5 +251,6 @@ public class MainActivity extends AbsBaseActivity implements NavigationView.OnNa
             firstClickTime = secondClickTime;
         }
     }
+
 
 }
