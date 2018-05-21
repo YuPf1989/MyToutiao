@@ -3,6 +3,7 @@ package com.rain.mytoutiao.activity;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.rain.mytoutiao.R;
 import com.rain.mytoutiao.base.AbsBaseActivity;
@@ -28,7 +29,7 @@ public class SettingActivity extends AbsBaseActivity {
 
     @Override
     public void initViews(Bundle savedInstanceState) {
-        initToolBar(toolbar,true,"设置");
+        initToolBar(toolbar, true, "设置");
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content, GeneralPreferenceFragment.newInstance()).commit();
     }
@@ -39,5 +40,12 @@ public class SettingActivity extends AbsBaseActivity {
         ButterKnife.bind(this);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

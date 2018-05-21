@@ -1,17 +1,27 @@
 package com.rain.mytoutiao.fragment;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.rain.mytoutiao.R;
+import com.rain.mytoutiao.activity.SettingActivity;
 import com.rain.mytoutiao.util.CacheDataManager;
+import com.rain.mytoutiao.util.SoftKeyboardUtil;
 
 /**
  * Author:rain
@@ -22,12 +32,13 @@ import com.rain.mytoutiao.util.CacheDataManager;
  */
 public class GeneralPreferenceFragment extends PreferenceFragment {
 
-    private Activity context;
+    private SettingActivity context;
+    private static final String TAG = "GeneralFragment";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = getActivity();
+        context = (SettingActivity) getActivity();
         addPreferencesFromResource(R.xml.pref_general_fragment);
         getAppCacheSize();
         setVersion();
@@ -67,6 +78,22 @@ public class GeneralPreferenceFragment extends PreferenceFragment {
                 return false;
             }
         });
+
+        // EditTextPreference弹出的dialog消失后隐藏软键盘
+        findPreference("account").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Dialog dialog = ((EditTextPreference) preference).getDialog();
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        SoftKeyboardUtil.hideSoftKeyboard(context);
+                    }
+                });
+                return false;
+            }
+        });
+
     }
 
     private void setVersion() {
@@ -99,4 +126,5 @@ public class GeneralPreferenceFragment extends PreferenceFragment {
                         .getDefaultSharedPreferences(preference.getContext())
                         .getString(preference.getKey(), ""));
     }
+
 }

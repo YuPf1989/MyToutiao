@@ -68,9 +68,6 @@ public abstract class AbsBaseActivity extends RxAppCompatActivity {
 
     public abstract void initViews(Bundle savedInstanceState);
 
-    /**
-     * 初始化 Toolbar
-     */
     protected void initToolBar(Toolbar toolbar, boolean homeAsUpEnabled, String title) {
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
@@ -78,11 +75,6 @@ public abstract class AbsBaseActivity extends RxAppCompatActivity {
     }
 
 
-    /**
-     * 弹出吐司,子类里边也可以
-     *
-     * @param msg
-     */
     public void showToast(final String msg) {
 
         runOnUiThread(new Runnable() {
@@ -94,12 +86,6 @@ public abstract class AbsBaseActivity extends RxAppCompatActivity {
 
     }
 
-    /**
-     * 如果toobar菜单栏点击的是home键，关闭当前页面
-     *
-     * @param item
-     * @return
-     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -111,8 +97,6 @@ public abstract class AbsBaseActivity extends RxAppCompatActivity {
     /**
      * 是否可以使用沉浸式
      * Is immersion bar enabled boolean.
-     *
-     * @return the boolean
      */
     protected boolean isImmersionBarEnabled() {
         return true;
